@@ -1,0 +1,43 @@
+import ListItem from "@/components/public-view/list-item";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { ArrowLeft } from "lucide-react";
+import { NavLink } from "react-router-dom";
+
+function PublicView() {
+  const { user } = useAuth();
+
+  return (
+    <section className="w-full max-w-5xl mx-auto px-4 space-y-6">
+      {/* 🔹 Header Section */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-4">
+        <div>
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">User:</span>{" "}
+            {user?.email ?? "Guest"}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Manage your encrypted credentials securely.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+          <NavLink to="/">
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </Button>
+          </NavLink>
+        </div>
+      </div>
+
+      {/* 🔹 Vault List */}
+      <ListItem />
+    </section>
+  );
+}
+
+export default PublicView;
