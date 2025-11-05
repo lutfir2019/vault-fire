@@ -30,7 +30,7 @@ export function useAuth() {
 }
 
 export function useLogin() {
-  const { setMasterKey } = useMasterKey();
+  const { setMasterKey, setIsVerify } = useMasterKey();
 
   return useMutation({
     mutationFn: async ({ email, password }: IAuthLogin) => {
@@ -42,6 +42,8 @@ export function useLogin() {
 
       // Simpan sementara di store
       setMasterKey(password);
+
+      setIsVerify(true);
 
       // 2. Update data login terakhir di Firestore
       const userRef = doc(db, "users", cred.user.uid);

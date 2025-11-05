@@ -8,9 +8,9 @@ function PublicView() {
   const { user } = useAuth();
 
   return (
-    <section className="w-full max-w-5xl mx-auto px-4 space-y-6">
+    <section className="w-full max-w-5xl mx-auto sm:px-4 space-y-6">
       {/* 🔹 Header Section */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-4">
+      <div className="flex flex-col px-4 sm:px-0 sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-4">
         <div>
           <p className="text-sm text-muted-foreground">
             <span className="font-medium text-foreground">User:</span>{" "}
@@ -35,7 +35,9 @@ function PublicView() {
       </div>
 
       {/* 🔹 Vault List */}
-      <ListItem />
+      <div className="px-1.5 sm:p-0">
+        <ListItem />
+      </div>
     </section>
   );
 }

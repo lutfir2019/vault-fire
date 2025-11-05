@@ -34,7 +34,7 @@ function ListItem() {
         <CardTitle className="text-xl font-semibold">Public</CardTitle>
       </CardHeader>
 
-      <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <CardContent className="grid gap-4 max-sm:p-1 sm:grid-cols-2 lg:grid-cols-3">
         {data?.length === 0 && (
           <p className="text-center text-muted-foreground col-span-full">
             No vault items found.

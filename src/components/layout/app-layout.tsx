@@ -37,9 +37,12 @@ export default function AuthLayout({ isAuth }: Readonly<AuthLayoutProps>) {
     setError("");
 
     try {
-      await checkMasterKey({ uuid: auth.currentUser?.uid, inputKey });
+      const ok = await checkMasterKey({
+        uuid: auth.currentUser?.uid,
+        inputKey,
+      });
       setMasterKey(inputKey);
-      setIsVerify(true);
+      setIsVerify(ok);
       setInputKey("");
     } catch (err: any) {
       setError(err.message || "Verifikasi gagal");
