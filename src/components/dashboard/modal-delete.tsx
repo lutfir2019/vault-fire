@@ -3,6 +3,7 @@ import DialogAction from "../global/custom-dialog-action";
 import { Button } from "../ui/button";
 import type { TKey } from "@/types";
 import { useMasterKey } from "@/stores/master";
+import { Loader2 } from "lucide-react";
 
 interface ModalDeleteProps {
   dataItem: TKey | null;
@@ -11,7 +12,7 @@ interface ModalDeleteProps {
 }
 
 function ModalDelete({ open, onClose, dataItem }: Readonly<ModalDeleteProps>) {
-  const { mutateAsync: deleteVaultItem } = useDeleteVaultItem();
+  const { mutateAsync: deleteVaultItem, isPending } = useDeleteVaultItem();
   const { isVerify } = useMasterKey();
 
   async function handleDelete() {
@@ -19,7 +20,9 @@ function ModalDelete({ open, onClose, dataItem }: Readonly<ModalDeleteProps>) {
 
     const id = dataItem?.id;
 
-    await deleteVaultItem(id as string);
+    await deleteVaultItem(id as string, {
+      onSuccess: onClose,
+    });
   }
 
   return (
@@ -40,8 +43,13 @@ function ModalDelete({ open, onClose, dataItem }: Readonly<ModalDeleteProps>) {
             className="w-full"
             variant="destructive"
             onClick={handleDelete}
+            disabled={isPending}
           >
-            Delete
+            {isPending ? (
+              <Loader2 className="h-8 w-8 animate-spin" />
+            ) : (
+              "Delete"
+            )}
           </Button>
         </div>
       </div>

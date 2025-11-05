@@ -10,11 +10,12 @@ import DialogAction from "../global/custom-dialog-action";
 import { Button } from "../ui/button";
 import type { TKey } from "@/types";
 import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().nonempty("Username is required field"),
   password: z.string().nonempty("Password is required field"),
-  url: z.string().nonempty("URL is required field"),
+  url: z.string().optional(),
   description: z.string().optional(),
   type: z.string().optional(),
 });
@@ -61,11 +62,14 @@ function Handleform({ onClose, open, dataItem }: Readonly<HandleformProps>) {
       if (!isVerify) return;
 
       if (isEdit) {
-        await updateVaultItem({ id: dataItem?.id as string, data: values });
+        await updateVaultItem({
+          id: dataItem?.id as string,
+          data: { ...values, createdBy: user?.email },
+        });
       } else {
         await addVaultItem({
           uid: user?.uid as string,
-          data: values,
+          data: { ...values, createdBy: user?.email },
         });
       }
 
@@ -87,6 +91,13 @@ function Handleform({ onClose, open, dataItem }: Readonly<HandleformProps>) {
     }
   }, [open, dataItem]);
 
+  const renderLabel = () => {
+    if (isLoading) {
+      return <Loader2 className="h-8 w-8 animate-spin" />;
+    }
+    return isEdit ? "Edit" : "Create";
+  };
+
   return (
     <DialogAction
       className="max-w-md"
@@ -104,7 +115,7 @@ function Handleform({ onClose, open, dataItem }: Readonly<HandleformProps>) {
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isEdit ? "Edit" : "Create"}
+              {renderLabel()}
             </Button>
           </div>
         </form>
