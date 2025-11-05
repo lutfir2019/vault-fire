@@ -5,6 +5,7 @@ export type TKey = {
   url?: string;
   description?: string;
   type?: string;
+  createdBy?: string | null;
 };
 
 export type TVaultItemRecord = {

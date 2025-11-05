@@ -26,19 +26,17 @@ function CardItem({
       key={item.id}
       className="border rounded-xl shadow-xs hover:shadow-md transition-all gap-2"
     >
-      <CardHeader className="flex justify-center">
-        {isPublic ? (
-          <Badge variant="outline">
-            <Globe />
-            Public
-          </Badge>
-        ) : (
-          <Badge variant="secondary">
-            <Lock />
-            Private
-          </Badge>
-        )}
+      <CardHeader className="flex items-center justify-between">
+        <span className="text-xs text-gray-500">Creator: {item.createdBy}</span>
+        <Badge
+          variant={isPublic ? "outline" : "secondary"}
+          className="flex items-center space-x-1"
+        >
+          {isPublic ? <Globe /> : <Lock />}
+          <span>{isPublic ? "Public" : "Private"}</span>
+        </Badge>
       </CardHeader>
+
       <CardContent className="relative space-y-2 text-sm text-muted-foreground">
         {/* URL */}
         <div className="flex items-center gap-2">
