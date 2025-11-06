@@ -150,12 +150,12 @@ function CardItem({
         <Separator />
 
         {/* Description */}
-        <div className="min-h-10 max-h-20 overflow-auto wrap-normal border rounded-md px-2.5 py-1 text-xs">
+        <div className="h-full min-h-10 max-h-20 overflow-auto wrap-normal border rounded-md px-2.5 py-1 text-xs">
           {item?.description ?? "-"}
         </div>
       </CardContent>
 
-      <CardFooter className="grid grid-cols-2 gap-2 justify-end">
+      <CardFooter className="grid grid-cols-2 gap-2 justify-end mt-auto">
         <Button
           size="icon-sm"
           title="Edit"
