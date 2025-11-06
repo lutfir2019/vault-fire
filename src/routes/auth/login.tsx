@@ -36,15 +36,11 @@ function Login() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex justify-center items-center"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <LoginForm
           control={form.control}
           loading={isPending}
           isError={isError}
-          className="w-full max-w-md h-screen justify-center max-sm:p-2"
         />
       </form>
     </Form>

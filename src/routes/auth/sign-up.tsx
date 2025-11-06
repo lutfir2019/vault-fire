@@ -41,16 +41,12 @@ function Signup() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex justify-center items-center min-h-screen max-sm:p-2"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <SignupForm
           control={form.control}
           loading={isPending}
           isError={isError}
           errorMessage={getError(error)}
-          className="w-full max-w-md justify-center"
         />
       </form>
     </Form>
