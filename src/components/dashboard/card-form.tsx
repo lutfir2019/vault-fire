@@ -20,7 +20,9 @@ export function CardForm({ control }: Readonly<CardFormProps>) {
         name="username"
         label="Username"
         control={control}
-        render={({ field }) => <Input {...field} id="username" placeholder="John_Doe" />}
+        render={({ field }) => (
+          <Input {...field} id="username" placeholder="John_Doe" />
+        )}
       />
       <CustomField
         name="password"
@@ -65,7 +67,11 @@ export function CardForm({ control }: Readonly<CardFormProps>) {
         label="Description"
         control={control}
         render={({ field }) => (
-          <Textarea {...field} placeholder="Type your message here." />
+          <Textarea
+            {...field}
+            placeholder="Type your message here."
+            className="max-h-[120px] overflow-y-auto resize-none"
+          />
         )}
       />
       <CustomField
