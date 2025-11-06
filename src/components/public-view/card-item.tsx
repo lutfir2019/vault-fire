@@ -134,7 +134,7 @@ function CardItem({
         <Separator />
 
         {/* Description */}
-        <div className="h-full min-h-10 max-h-20 overflow-auto wrap-normal border rounded-md px-2.5 py-1 text-xs">
+        <div className="h-20 overflow-auto wrap-normal border rounded-md px-2.5 py-1 text-xs">
           {item?.description ?? "-"}
         </div>
       </CardContent>
