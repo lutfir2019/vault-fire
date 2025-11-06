@@ -38,7 +38,7 @@ function CardItem({
   return (
     <Card
       key={item.id}
-      className="border rounded-xl shadow-xs hover:shadow-md transition-all gap-2"
+      className="border col-span-2 sm:col-span-1 rounded-xl shadow-xs hover:shadow-md transition-all gap-2"
     >
       <CardHeader className="flex justify-center">
         {isPublic ? (
