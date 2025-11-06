@@ -44,7 +44,7 @@ function Login() {
           control={form.control}
           loading={isPending}
           isError={isError}
-          className="w-full max-w-md h-screen justify-center"
+          className="w-full max-w-md h-screen justify-center max-sm:p-2"
         />
       </form>
     </Form>
