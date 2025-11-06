@@ -20,7 +20,7 @@ export function CardForm({ control }: Readonly<CardFormProps>) {
         name="username"
         label="Username"
         control={control}
-        render={({ field }) => <Input {...field} id="username" />}
+        render={({ field }) => <Input {...field} id="username" placeholder="John_Doe" />}
       />
       <CustomField
         name="password"
