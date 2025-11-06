@@ -8,11 +8,15 @@ import {
 import type { TKey } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useGetVaultItems(uid?: string, masterKey?: string) {
+export function useGetVaultItems(params: {
+  uid?: string;
+  masterKey?: string;
+  src?: string;
+}) {
   return useQuery({
-    queryKey: ["vaultItems", uid, masterKey],
-    queryFn: () => getVaultItems(uid, masterKey),
-    enabled: !!uid,
+    queryKey: ["vaultItems", params],
+    queryFn: () => getVaultItems(params),
+    enabled: !!params.uid,
   });
 }
 

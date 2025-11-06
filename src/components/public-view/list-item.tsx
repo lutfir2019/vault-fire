@@ -2,11 +2,14 @@ import { useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import CardItem from "./card-item";
 import { useGetVaultPublicItems } from "@/hooks/usePublicView";
+import { useSearchParams } from "react-router-dom";
 
 function ListItem() {
   const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
+  const [searchParams] = useSearchParams();
+  const src = searchParams.get("src") || "";
 
-  const { data: items, isPending } = useGetVaultPublicItems();
+  const { data: items, isPending } = useGetVaultPublicItems({src});
 
   const data = useMemo(() => items ?? [], [items]);
 

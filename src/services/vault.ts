@@ -41,7 +41,15 @@ export async function addVaultItem(uid: string, data: TKey) {
 /**
  * Ambil semua item milik user (dan dekripsi)
  */
-export async function getVaultItems(uid?: string, masterKey?: string) {
+export async function getVaultItems({
+  masterKey,
+  uid,
+  src
+}: {
+  uid?: string;
+  masterKey?: string;
+  src?: string;
+}) {
   if (!masterKey) throw new Error("Vault terkunci. Master key tidak tersedia.");
 
   const q = query(collection(db, "vaultItems"), where("ownerUid", "==", uid));
@@ -59,6 +67,16 @@ export async function getVaultItems(uid?: string, masterKey?: string) {
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     });
+  }
+
+    // 🔍 Filter berdasarkan search
+  if (src && src.trim() !== "") {
+    const keyword = src.toLowerCase();
+    return items.filter((item) =>
+      [item.username, item.url, item.description]
+        .filter(Boolean)
+        .some((field) => field!.toLowerCase().includes(keyword))
+    );
   }
 
   return items as TKey[];

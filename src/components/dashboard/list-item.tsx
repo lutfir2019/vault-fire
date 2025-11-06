@@ -13,16 +13,23 @@ import type { TKey } from "@/types";
 import Handleform from "./handle-form";
 import ModalDelete from "./modal-delete";
 import CardItem from "./card-item";
+import { useSearchParams } from "react-router-dom";
 
 function ListItem() {
   const [dataItem, setDataItem] = useState<TKey | null>(null);
   const [openForm, setOpenForm] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
+  const [searchParams] = useSearchParams();
+  const src = searchParams.get("src") || "";
 
   const user = useMemo(() => auth.currentUser, [auth.currentUser]);
   const { masterKey, isVerify } = useMasterKey();
-  const { data: items, isPending } = useGetVaultItems(user?.uid, masterKey);
+  const { data: items, isPending } = useGetVaultItems({
+    uid: user?.uid,
+    masterKey,
+    src,
+  });
 
   const data = useMemo(() => items ?? [], [items]);
 
