@@ -4,6 +4,7 @@ import { Check, Copy, Eye, EyeOff, Globe, User, Lock } from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
+import { Textarea } from "../ui/textarea";
 
 interface CardItemProps {
   item: TKey;
@@ -134,9 +135,11 @@ function CardItem({
         <Separator />
 
         {/* Description */}
-        <div className="h-20 overflow-auto wrap-normal border rounded-md px-2.5 py-1 text-xs">
-          {item?.description ?? "-"}
-        </div>
+        <Textarea
+          value={item?.description ?? "-"}
+          readOnly
+          className="h-20 overflow-auto border rounded-md px-2.5 py-1 text-xs resize-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-border"
+        />
       </CardContent>
     </Card>
   );
