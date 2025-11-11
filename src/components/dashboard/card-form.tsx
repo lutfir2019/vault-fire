@@ -17,20 +17,6 @@ export function CardForm({ control }: Readonly<CardFormProps>) {
   return (
     <div className="space-y-3">
       <CustomField
-        name="username"
-        label="Username"
-        control={control}
-        render={({ field }) => (
-          <Input {...field} id="username" placeholder="John_Doe" />
-        )}
-      />
-      <CustomField
-        name="password"
-        label="Password"
-        control={control}
-        render={({ field }) => <InputPassword {...field} id="password" />}
-      />
-      <CustomField
         name="url"
         label="URL"
         control={control}
@@ -61,6 +47,20 @@ export function CardForm({ control }: Readonly<CardFormProps>) {
             </div>
           );
         }}
+      />
+      <CustomField
+        name="username"
+        label="Username"
+        control={control}
+        render={({ field }) => (
+          <Input {...field} id="username" placeholder="John_Doe" />
+        )}
+      />
+      <CustomField
+        name="password"
+        label="Password"
+        control={control}
+        render={({ field }) => <InputPassword {...field} id="password" />}
       />
       <CustomField
         name="description"
