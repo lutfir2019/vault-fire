@@ -29,6 +29,7 @@ export function useAddVaultItem() {
 
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["vaultItems"] });
+      qc.invalidateQueries({ queryKey: ["vaultItems-public"] });
     },
   });
 }
@@ -37,7 +38,10 @@ export function useDeleteVaultItem() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => deleteVaultItem(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["vaultItems"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["vaultItems"] });
+      qc.invalidateQueries({ queryKey: ["vaultItems-public"] });
+    },
   });
 }
 
@@ -47,7 +51,10 @@ export function useUpdateVaultItem() {
     mutationFn: async ({ id, data }: { id: string; data: TKey }) =>
       updateVaultItem(id, data),
 
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["vaultItems"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["vaultItems"] });
+      qc.invalidateQueries({ queryKey: ["vaultItems-public"] });
+    },
   });
 }
 
