@@ -27,8 +27,8 @@ export function useAddVaultItem() {
     mutationFn: async ({ uid, data }: { uid: string; data: TKey }) =>
       addVaultItem(uid, data),
 
-    onSuccess: (_, { uid }) => {
-      qc.invalidateQueries({ queryKey: ["vaultItems", uid] });
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["vaultItems"] });
     },
   });
 }
@@ -44,13 +44,8 @@ export function useDeleteVaultItem() {
 export function useUpdateVaultItem() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({
-      id,
-      data,
-    }: {
-      id: string;
-      data: Record<string, any>;
-    }) => updateVaultItem(id, data),
+    mutationFn: async ({ id, data }: { id: string; data: TKey }) =>
+      updateVaultItem(id, data),
 
     onSuccess: () => qc.invalidateQueries({ queryKey: ["vaultItems"] }),
   });
