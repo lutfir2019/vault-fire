@@ -1,4 +1,3 @@
-
 ---
 
 ````md
@@ -50,7 +49,7 @@ export default defineConfig([
     },
   },
 ]);
-````
+```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
@@ -87,9 +86,9 @@ export default defineConfig([
 
 This project enforces **commit message conventions** using:
 
-* [Husky](https://typicode.github.io/husky/)
-* [Commitlint](https://commitlint.js.org/)
-* [Lint-Staged](https://github.com/okonet/lint-staged)
+- [Husky](https://typicode.github.io/husky/)
+- [Commitlint](https://commitlint.js.org/)
+- [Lint-Staged](https://github.com/okonet/lint-staged)
 
 ### 📦 Setup
 
@@ -183,10 +182,9 @@ Add to your `package.json`:
    ```
 
 3. Husky will:
-
-   * Run `eslint` and `prettier` on staged files
-   * Validate the commit message format
-   * Reject commit if lint/format fails
+   - Run `eslint` and `prettier` on staged files
+   - Validate the commit message format
+   - Reject commit if lint/format fails
 
 ---
 
