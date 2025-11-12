@@ -11,23 +11,27 @@ import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { CustomField } from "./ui/form-field";
 import type { Control } from "react-hook-form";
-import { z } from "zod";
 import CustomAlert from "./global/custom-alert";
 import { NavLink } from "react-router-dom";
 import { InputPassword } from "./ui/input-password";
+
+type TForm = {
+  email: string;
+  password: string;
+};
 
 export function LoginForm({
   className,
   control,
   loading,
   isError,
-  errorMessage,
+  errorMessage: _,
   ...props
 }: React.ComponentProps<"div"> & {
-  control: Control<z.infer<any>> | undefined;
+  control: Control<TForm> | undefined;
   loading?: boolean;
   isError?: boolean;
-  errorMessage?: string
+  errorMessage?: string;
 }) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

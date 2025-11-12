@@ -10,10 +10,15 @@ import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { CustomField } from "./ui/form-field";
 import type { Control } from "react-hook-form";
-import { z } from "zod";
 import { InputPassword } from "./ui/input-password";
 import { NavLink } from "react-router-dom";
 import CustomAlert from "./global/custom-alert";
+
+type TForm = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export function SignupForm({
   control,
@@ -22,7 +27,7 @@ export function SignupForm({
   errorMessage,
   ...props
 }: React.ComponentProps<typeof Card> & {
-  control: Control<z.infer<any>> | undefined;
+  control: Control<TForm> | undefined;
   loading?: boolean;
   isError?: boolean;
   errorMessage?: string;

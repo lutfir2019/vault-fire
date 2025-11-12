@@ -7,14 +7,17 @@ export function randomBytes(length: number): Uint8Array {
   return arr;
 }
 
-export async function deriveMasterKey(password: string, salt: string): Promise<string> {
+export async function deriveMasterKey(
+  password: string,
+  salt: string,
+): Promise<string> {
   const enc = new TextEncoder();
   const data = enc.encode(password + salt);
   const hash = await crypto.subtle.digest("SHA-256", data);
   // Convert hash ke Base64 agar bisa disimpan string
   const bytes = new Uint8Array(hash);
   let binary = "";
-  for (let b of bytes) binary += String.fromCharCode(b);
+  for (const b of bytes) binary += String.fromCharCode(b);
   return btoa(binary);
 }
 
@@ -41,13 +44,14 @@ export function b64ToBuf(b64: string): ArrayBuffer {
   return bytes.buffer;
 }
 
-
 // ================================================
 // 🔐  Fungsi utama: Enkripsi & Dekripsi JSON
 // ================================================
 
 // 🔹 Konversi masterKey string menjadi CryptoKey
-async function importCryptoKeyFromString(masterKey: string): Promise<CryptoKey> {
+async function importCryptoKeyFromString(
+  masterKey: string,
+): Promise<CryptoKey> {
   const enc = new TextEncoder();
   const keyData = await crypto.subtle.digest("SHA-256", enc.encode(masterKey)); // derive 256-bit key
   return crypto.subtle.importKey("raw", keyData, "AES-GCM", false, [
@@ -67,7 +71,11 @@ export async function encryptJSON(masterKey: string, data: unknown) {
   const encoder = new TextEncoder();
   const encoded = encoder.encode(JSON.stringify(data));
 
-  const cipherBuf = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, encoded);
+  const cipherBuf = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    encoded,
+  );
 
   return {
     iv: bufToB64(iv.buffer), // ✅ gunakan .buffer di sini
@@ -75,18 +83,24 @@ export async function encryptJSON(masterKey: string, data: unknown) {
   };
 }
 
-
 // ================================================
 // ✅ DECRYPT JSON
 // ================================================
-export async function decryptJSON(masterKey: string, ivB64: string, cipherB64: string) {
+export async function decryptJSON(
+  masterKey: string,
+  ivB64: string,
+  cipherB64: string,
+) {
   const key = await importCryptoKeyFromString(masterKey);
   const iv = new Uint8Array(b64ToBuf(ivB64));
   const cipherBuf = b64ToBuf(cipherB64);
 
-  const plainBuf = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, cipherBuf);
+  const plainBuf = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv },
+    key,
+    cipherBuf,
+  );
   const decoder = new TextDecoder();
   const decoded = decoder.decode(plainBuf);
   return JSON.parse(decoded);
 }
-

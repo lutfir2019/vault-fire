@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Control } from "react-hook-form";
 import { CustomField } from "../ui/form-field";
 import { z } from "zod";

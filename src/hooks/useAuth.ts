@@ -12,10 +12,11 @@ import { doc, setDoc } from "firebase/firestore";
 import type { IAuthLogin } from "@/types";
 import { bufToB64, deriveMasterKey, randomBytes } from "@/lib/crypto-utils";
 import { useMasterKey } from "@/stores/master";
+import { useTheme } from "@/stores/theme";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { loading, setLoading } = useTheme();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -37,7 +38,7 @@ export function useLogin() {
       const cred = await signInWithEmailAndPassword(
         auth,
         email.trim(),
-        password
+        password,
       );
 
       // Simpan sementara di store
@@ -58,7 +59,7 @@ export function useSignup() {
       const cred = await createUserWithEmailAndPassword(
         auth,
         email.trim(),
-        password
+        password,
       );
 
       const salt = randomBytes(16);

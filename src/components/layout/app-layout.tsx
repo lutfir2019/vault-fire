@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 import { useState } from "react";
 import { useMasterKey } from "@/stores/master";
 import { useCheckMasterKey } from "@/hooks/useVault";
+import { IdleTracker } from "../global/custom-idle-tracker";
 
 interface AuthLayoutProps {
   isAuth: boolean;
@@ -44,7 +45,9 @@ export default function AuthLayout({ isAuth }: Readonly<AuthLayoutProps>) {
       setMasterKey(inputKey);
       setIsVerify(ok);
       setInputKey("");
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as { message: string };
+
       setError(err.message || "Verifikasi gagal");
     }
   }
@@ -134,6 +137,8 @@ export default function AuthLayout({ isAuth }: Readonly<AuthLayoutProps>) {
           </div>
         </div>
       </header>
+
+      <IdleTracker />
 
       {/* Konten utama */}
       <main className="flex-1 max-w-6xl mx-auto w-full p-0 sm:p-6 mt-44 sm:mt-15">
