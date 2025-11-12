@@ -7,7 +7,7 @@ function AuthLayout({ isAuth }: Readonly<{ isAuth: boolean }>) {
   }
 
   return (
-    <main className="h-screen flex flex-col items-center justify-center gap-3">
+    <main className="min-h-screen flex flex-col items-center justify-center gap-3">
       <section className="flex justify-center items-center gap-2">
         <GlobeLock className="h-8 w-8 text-foreground" />
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">
