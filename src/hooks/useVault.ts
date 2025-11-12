@@ -23,9 +23,7 @@ export function useGetVaultItems(params: {
 export function useAddVaultItem() {
   const qc = useQueryClient();
   return useMutation({
-    // ✅ Terima { uid, data } dan kirim ke addVaultItem
-    mutationFn: async ({ uid, data }: { uid: string; data: TKey }) =>
-      addVaultItem(uid, data),
+    mutationFn: addVaultItem,
 
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["vaultItems"] });

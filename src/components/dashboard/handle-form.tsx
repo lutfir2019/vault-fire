@@ -67,10 +67,7 @@ function Handleform({ onClose, open, dataItem }: Readonly<HandleformProps>) {
           data: { ...values, createdBy: user?.email },
         });
       } else {
-        await addVaultItem({
-          uid: user?.uid as string,
-          data: { ...values, createdBy: user?.email },
-        });
+        await addVaultItem({ ...values, createdBy: user?.email });
       }
 
       handleClose();

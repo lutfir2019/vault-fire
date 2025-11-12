@@ -19,7 +19,7 @@ const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_HASH_KEY ?? "PUBLIC_KEY";
 /**
  * Tambah item baru (terenkripsi)
  */
-export async function addVaultItem(uid: string, data: TKey) {
+export async function addVaultItem(data: TKey) {
   const user = auth.currentUser;
   const key =
     data.type === "public" ? PUBLIC_KEY : useMasterKey.getState().masterKey;
@@ -28,7 +28,6 @@ export async function addVaultItem(uid: string, data: TKey) {
   const encrypted = await encryptJSON(key, data);
 
   await addDoc(collection(db, "vaultItems"), {
-    uid,
     iv: encrypted.iv,
     ownerUid: user?.uid,
     type: data.type,
