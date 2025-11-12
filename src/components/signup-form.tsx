@@ -83,6 +83,12 @@ export function SignupForm({
                 <FieldDescription>
                   Must be at least 8 characters long.
                 </FieldDescription>
+                <FieldDescription className="text-muted-foreground italic">
+                  ⚠️ This password will be used as your <b>master key</b> to
+                  encrypt and unlock your Vault data. Please choose a strong and
+                  memorable password — if you lose it, your encrypted data
+                  cannot be recovered.
+                </FieldDescription>
               </Field>
             )}
           />
