@@ -19,10 +19,9 @@ export function getError(error: unknown): string | undefined {
   };
 
   return err?.code
-    ? ERROR_MAP[err?.code] ?? "An unexpected error occurred."
+    ? (ERROR_MAP[err?.code] ?? "An unexpected error occurred.")
     : undefined;
 }
-
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function debounce<T extends (...args: any[]) => any>(

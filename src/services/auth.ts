@@ -14,7 +14,7 @@ import { doc, getDoc } from "firebase/firestore";
  * @returns Uint8Array salt (hasil decode Base64)
  */
 export async function getUserSalt(
-  uuid: string
+  uuid: string,
 ): Promise<{ salt: string; masterKey: string } | null> {
   // Pastikan user sudah login
   if (!uuid) throw new Error("User not authenticated");
@@ -45,7 +45,7 @@ export async function getUserSalt(
  */
 export async function checkMasterKey(
   uuid: string,
-  inputKey: string
+  inputKey: string,
 ): Promise<boolean> {
   const hash = await getUserSalt(uuid);
 

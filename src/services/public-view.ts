@@ -29,7 +29,7 @@ export async function getVaultPublicItems({ src }: { src?: string }) {
     return items.filter((item) =>
       [item.username, item.url, item.description]
         .filter(Boolean)
-        .some((field) => field!.toLowerCase().includes(keyword))
+        .some((field) => field!.toLowerCase().includes(keyword)),
     );
   }
 

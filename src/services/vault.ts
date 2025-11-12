@@ -44,7 +44,7 @@ export async function addVaultItem(uid: string, data: TKey) {
 export async function getVaultItems({
   masterKey,
   uid,
-  src
+  src,
 }: {
   uid?: string;
   masterKey?: string;
@@ -69,13 +69,13 @@ export async function getVaultItems({
     });
   }
 
-    // 🔍 Filter berdasarkan search
+  // 🔍 Filter berdasarkan search
   if (src && src.trim() !== "") {
     const keyword = src.toLowerCase();
     return items.filter((item) =>
       [item.username, item.url, item.description]
         .filter(Boolean)
-        .some((field) => field!.toLowerCase().includes(keyword))
+        .some((field) => field!.toLowerCase().includes(keyword)),
     );
   }
 

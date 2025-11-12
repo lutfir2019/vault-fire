@@ -9,7 +9,7 @@ function ListItem() {
   const [searchParams] = useSearchParams();
   const src = searchParams.get("src") || "";
 
-  const { data: items, isPending } = useGetVaultPublicItems({src});
+  const { data: items, isPending } = useGetVaultPublicItems({ src });
 
   const data = useMemo(() => items ?? [], [items]);
 

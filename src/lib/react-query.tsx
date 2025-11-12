@@ -17,7 +17,7 @@ export default function TanstackQueryProvider({
             retry: 1,
           },
         },
-      })
+      }),
   );
 
   return (
