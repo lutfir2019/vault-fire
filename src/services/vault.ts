@@ -9,6 +9,7 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  orderBy,
 } from "firebase/firestore";
 import { decryptJSON, encryptJSON } from "@/lib/crypto-utils";
 import { useMasterKey } from "@/stores/master";
@@ -51,7 +52,11 @@ export async function getVaultItems({
 }) {
   if (!masterKey) throw new Error("Vault terkunci. Master key tidak tersedia.");
 
-  const q = query(collection(db, "vaultItems"), where("ownerUid", "==", uid));
+  const q = query(
+    collection(db, "vaultItems"),
+    where("ownerUid", "==", uid),
+    orderBy("updatedAt", "desc"),
+  );
 
   const snapshot = await getDocs(q);
 
