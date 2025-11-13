@@ -1,7 +1,7 @@
 import { db } from "@/firebase/config";
 import { decryptJSON } from "@/lib/crypto-utils";
 import type { TKey } from "@/types";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_HASH_KEY ?? "PUBLIC_KEY";
 
@@ -9,7 +9,12 @@ const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_HASH_KEY ?? "PUBLIC_KEY";
  * Ambil semua item milik user (dan dekripsi)
  */
 export async function getVaultPublicItems({ src }: { src?: string }) {
-  const q = query(collection(db, "vaultItems"), where("type", "==", "public"));
+  const q = query(
+    collection(db, "vaultItems"),
+    where("type", "==", "public"),
+    orderBy("updatedAt", "desc"),
+  );
+
   const snapshot = await getDocs(q);
 
   const items = [];
