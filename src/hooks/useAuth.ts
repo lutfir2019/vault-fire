@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
   type User,
 } from "firebase/auth";
 import { auth, db } from "@/firebase/config";
@@ -19,9 +20,27 @@ export function useAuth() {
   const { loading, setLoading } = useTheme();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+
+      if (currentUser) {
+        // Cek token expiration
+        const tokenResult = await currentUser.getIdTokenResult();
+
+        const expirationTimeMs = new Date(tokenResult.expirationTime).getTime(); // expired on 1 hour
+        const extendedExpirationTimeMs = expirationTimeMs + 23 * 60 * 60 * 1000; // +23 jam
+        const now = Date.now();
+
+        if (now > extendedExpirationTimeMs) {
+          try {
+            await signOut(auth);
+            window.location.href = "/auth/login";
+          } catch (error) {
+            console.error("Logout failed:", error);
+          }
+        }
+      }
     });
 
     return () => unsubscribe();
