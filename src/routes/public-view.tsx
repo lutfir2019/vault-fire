@@ -24,7 +24,7 @@ function PublicView() {
       <div className="flex flex-col px-4 sm:px-0 sm:flex-row items-start sm:items-center justify-between gap-4 border-b pb-4">
         <div>
           <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">User:</span>{" "}
+            <span className="font-semibold text-foreground">User:</span>{" "}
             {user?.email ?? "Guest"}
           </p>
           <p className="text-sm text-muted-foreground">
