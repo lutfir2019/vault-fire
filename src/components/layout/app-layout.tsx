@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GlobeLock, LockOpen, LogOut, ShieldOff } from "lucide-react";
 import { auth } from "@/firebase/config";
-import { signOut } from "firebase/auth";
 import { useState } from "react";
 import { useMasterKey } from "@/stores/master";
 import { useCheckMasterKey } from "@/hooks/useVault";
 import { IdleTracker } from "../global/custom-idle-tracker";
+import { useAuthStore } from "@/stores/auth";
 
 interface AuthLayoutProps {
   isAuth: boolean;
@@ -16,19 +16,13 @@ interface AuthLayoutProps {
 export default function AuthLayout({ isAuth }: Readonly<AuthLayoutProps>) {
   const [inputKey, setInputKey] = useState("");
   const [error, setError] = useState("");
+  const { logout } = useAuthStore();
 
   const { setMasterKey, setIsVerify, isVerify } = useMasterKey();
   const { mutateAsync: checkMasterKey, isPending: loading } =
     useCheckMasterKey();
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      window.location.href = "/auth/login"; // redirect manual agar clear state
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
-  };
+  const handleLogout = async () => await logout();
 
   // === Verifikasi Master Key ===
   async function handleVerify(e?: React.FormEvent) {

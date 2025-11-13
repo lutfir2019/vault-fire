@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut,
   type User,
 } from "firebase/auth";
 import { auth, db } from "@/firebase/config";
@@ -14,10 +13,13 @@ import type { IAuthLogin } from "@/types";
 import { bufToB64, deriveMasterKey, randomBytes } from "@/lib/crypto-utils";
 import { useMasterKey } from "@/stores/master";
 import { useTheme } from "@/stores/theme";
+import { useAuthStore } from "@/stores/auth";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const { loading, setLoading } = useTheme();
+  const EXPIRED_TIME = 24 * 60 * 60 * 1000;
+  const { logout } = useAuthStore();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -25,20 +27,21 @@ export function useAuth() {
       setLoading(false);
 
       if (currentUser) {
-        // Cek token expiration
-        const tokenResult = await currentUser.getIdTokenResult();
+        const expSession = localStorage.getItem("expSession");
 
-        const expirationTimeMs = new Date(tokenResult.expirationTime).getTime(); // expired on 1 hour
-        const extendedExpirationTimeMs = expirationTimeMs + 23 * 60 * 60 * 1000; // +23 jam
+        const expTime = Date.now() + EXPIRED_TIME;
+
+        if (!expSession) {
+          localStorage.setItem("expSession", expTime.toString());
+        }
+
         const now = Date.now();
 
-        if (now > extendedExpirationTimeMs) {
-          try {
-            await signOut(auth);
-            window.location.href = "/auth/login";
-          } catch (error) {
-            console.error("Logout failed:", error);
-          }
+        // 24 jam lewat, logout
+        if (now > Number(expSession || now)) {
+          await logout();
+
+          return;
         }
       }
     });
